@@ -19,6 +19,7 @@ import tools.jackson.databind.ObjectMapper;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -120,6 +121,15 @@ class BeerControllerTest {
                 .andExpect(header().exists("Location"));
 
 //        System.out.println(objectMapper.writeValueAsString(beer));
+    }
+
+    @Test
+    void getBeerByIdNotFound() throws Exception {
+
+        given(beerService.getBeerById(any(UUID.class))).willThrow(NotFoundException.class);
+
+        mockMvc.perform(get(BeerController.BEER_PATH_WITH_ID, UUID.randomUUID()))
+                .andExpect(status().isNotFound());
     }
 
     @Test
