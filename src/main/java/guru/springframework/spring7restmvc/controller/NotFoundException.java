@@ -5,6 +5,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "Value Not Found")       // Simpler alternative to @AdviseController. ExceptionController not needed anymore.
 public class NotFoundException extends RuntimeException{
+
+    public NotFoundException() {}
+
     public NotFoundException(String message) {
         super(message);
     }
