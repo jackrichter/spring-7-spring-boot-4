@@ -79,6 +79,8 @@ class BeerControllerTest {
     void testDeleteBeer() throws Exception {
         BeerDTO beerDTO = beerServiceImpl.listBeers().get(0);
 
+        given(beerService.deleteById(any())).willReturn(true);
+
         mockMvc.perform(delete(BeerController.BEER_PATH_WITH_ID, beerDTO.getId())
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
