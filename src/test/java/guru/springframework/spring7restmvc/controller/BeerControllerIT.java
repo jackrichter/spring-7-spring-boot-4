@@ -62,10 +62,8 @@ class BeerControllerIT {
     void updateExistingBeer() {
         Beer beer = beerRepository.findAll().get(0);
         BeerDTO beerDTO = beerMapper.beerToBeerDto(beer);
-
         beerDTO.setId(null);
         beerDTO.setVersion(null);
-
         final String beerName = "UPDATED";
         beerDTO.setBeerName(beerName);
 
