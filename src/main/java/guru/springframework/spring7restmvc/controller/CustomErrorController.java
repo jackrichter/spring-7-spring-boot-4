@@ -1,6 +1,7 @@
 package guru.springframework.spring7restmvc.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.TransactionSystemException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -12,6 +13,11 @@ import java.util.stream.Collectors;
 
 @ControllerAdvice
 public class CustomErrorController {
+
+    @ExceptionHandler
+    ResponseEntity handleJPAViolations(TransactionSystemException ex) {
+        return ResponseEntity.badRequest().build();
+    }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     ResponseEntity handleBindError(MethodArgumentNotValidException ex) {
