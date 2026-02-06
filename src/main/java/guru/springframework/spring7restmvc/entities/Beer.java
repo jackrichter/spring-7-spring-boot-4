@@ -39,6 +39,7 @@ public class Beer {
     private String beerName;
 
     @NotNull
+    @JdbcTypeCode(SqlTypes.SMALLINT)
     private BeerStyle beerStyle;
 
     @NotNull
