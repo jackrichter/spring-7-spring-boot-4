@@ -25,3 +25,4 @@ create table customer
     version      integer,
     primary key (id)
 ) engine=InnoDB;
+
