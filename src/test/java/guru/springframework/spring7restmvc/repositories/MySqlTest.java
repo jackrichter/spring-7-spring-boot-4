@@ -4,6 +4,7 @@ import guru.springframework.spring7restmvc.entities.Beer;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
@@ -22,17 +23,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class MySqlTest {
 
     @Container
+    @ServiceConnection
     static MySQLContainer container = new MySQLContainer("mysql:9");
-
-    @Autowired              // Not necessary
-    DataSource dataSource;
-
-    @DynamicPropertySource
-    static void properties(DynamicPropertyRegistry registry) {
-        registry.add("spring.datasource.url", container::getJdbcUrl);
-        registry.add("spring.datasource.username", container::getUsername);
-        registry.add("spring.datasource.password", container::getPassword);
-    }
 
     @Autowired
     BeerRepository beerRepository;
