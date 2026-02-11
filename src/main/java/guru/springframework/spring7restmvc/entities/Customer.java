@@ -20,7 +20,7 @@ public class Customer {
     @Id
     @GeneratedValue(generator = "UUID")
     @UuidGenerator                      // Hibernate specific (new SpringBoot 3.4 or higher)
-    @Column(length = 36, columnDefinition = "varchar", updatable = false, nullable = false)
+    @Column(length = 36, columnDefinition = "varchar(36)", updatable = false, nullable = false)
     @JdbcTypeCode(SqlTypes.CHAR)        // Hibernate specific (new SpringBoot 3.4 or higher)
     private UUID id;
 
