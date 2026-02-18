@@ -23,18 +23,18 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class MySqlIT {  // Renamed to *IT, that marks it as an Integration Test, and it works with FailSafe (verify goal) and surefire (test goal) default configurations!
 
     @Container
-//    @ServiceConnection
+    @ServiceConnection
     static MySQLContainer container = new MySQLContainer("mysql:9");
 
-    @DynamicPropertySource
-    static void mysqlProperties(DynamicPropertyRegistry registry) {
-        registry.add("spring.datasource.username", container::getUsername);
-        registry.add("spring.datasource.password", container::getPassword);
-        registry.add("spring.datasource.url", container::getJdbcUrl);
-    }
-
-    @Autowired
-    DataSource dataSource;
+//    @DynamicPropertySource
+//    static void mysqlProperties(DynamicPropertyRegistry registry) {
+//        registry.add("spring.datasource.username", container::getUsername);
+//        registry.add("spring.datasource.password", container::getPassword);
+//        registry.add("spring.datasource.url", container::getJdbcUrl);
+//    }
+//
+//    @Autowired
+//    DataSource dataSource;
 
     @Autowired
     BeerRepository beerRepository;
