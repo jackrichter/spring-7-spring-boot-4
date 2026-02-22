@@ -21,14 +21,15 @@ import java.util.UUID;
 public class BeerOrder {
 
     public BeerOrder(UUID id, Long version, Timestamp createdDate, Timestamp lastModifiedDate,
-                     String customerRef, Customer customer, Set<BeerOrderLine> beerOrderLines) {
+                     String customerRef, Customer customer, Set<BeerOrderLine> beerOrderLines, BeerOrderShipment beerOrderShipment) {
         this.id = id;
         this.version = version;
         this.createdDate = createdDate;
         this.lastModifiedDate = lastModifiedDate;
         this.customerRef = customerRef;
-        this.setCustomer(customer);         // This is to aid as lombok builder ignores initializing Set and thus, the relationship is not set!!
+        this.setCustomer(customer);         // This is to aid as lombok builder ignores initializing Set, and thus, the relationship is not set!!
         this.beerOrderLines = beerOrderLines;
+        this.beerOrderShipment = beerOrderShipment;
     }
 
     @Id
@@ -64,4 +65,7 @@ public class BeerOrder {
 
     @OneToMany(mappedBy = "beerOrder")
     private Set<BeerOrderLine> beerOrderLines;
+
+    @OneToOne
+    private BeerOrderShipment beerOrderShipment;
 }
