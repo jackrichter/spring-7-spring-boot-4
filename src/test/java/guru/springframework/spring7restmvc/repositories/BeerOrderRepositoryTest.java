@@ -2,6 +2,7 @@ package guru.springframework.spring7restmvc.repositories;
 
 import guru.springframework.spring7restmvc.entities.Beer;
 import guru.springframework.spring7restmvc.entities.BeerOrder;
+import guru.springframework.spring7restmvc.entities.BeerOrderShipment;
 import guru.springframework.spring7restmvc.entities.Customer;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeEach;
@@ -38,17 +39,14 @@ class BeerOrderRepositoryTest {
         BeerOrder beerOrder = BeerOrder.builder()
                 .customerRef("Test order")
                 .customer(testCustomer)
+                .beerOrderShipment(BeerOrderShipment.builder()
+                        .trackingNumber("1235r")
+                        .build())
                 .build();
 
 //        BeerOrder savedBeerOrder = beerOrderRepository.saveAndFlush(beerOrder);
         BeerOrder savedBeerOrder = beerOrderRepository.save(beerOrder);
 
         System.out.println(savedBeerOrder.getCustomerRef());
-
-//        System.out.println(beerOrderRepository.count());
-//        System.out.println(customerRepository.count());
-//        System.out.println(beerRepository.count());
-//        System.out.println(testCustomer.getName());
-//        System.out.println(testBeer.getBeerName());
     }
 }
