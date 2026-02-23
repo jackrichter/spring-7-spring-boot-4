@@ -9,6 +9,7 @@ import jakarta.transaction.Transactional;
 import org.hamcrest.core.Is;
 import org.hamcrest.core.IsNull;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -32,8 +33,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.verify;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -60,6 +60,37 @@ class BeerControllerIT {
     @BeforeEach
     void setUp() {
         mockMvc = MockMvcBuilders.webAppContextSetup(wc).build();
+    }
+
+    @Disabled // Just to demo Optimistic Locking
+    @Test
+    void testUpdateBeerBadVersion() throws Exception {
+        Beer beer = beerRepository.findAll().get(0);
+
+        BeerDTO beerDTO = beerMapper.beerToBeerDto(beer);
+        beerDTO.setBeerName("Updated Name");
+
+//        beerDTO.setVersion(beer.getVersion() + 1);
+
+        MvcResult result = mockMvc.perform(put(BeerController.BEER_PATH, beer.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(beerDTO)))
+                .andExpect(status().isNoContent())
+                .andReturn();
+
+        System.out.println(result.getResponse().getContentAsString());
+
+        beerDTO.setBeerName("Updated Name 2");
+
+        MvcResult result2 = mockMvc.perform(put(BeerController.BEER_PATH, beer.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(beerDTO)))
+                .andExpect(status().isNoContent())
+                .andReturn();
+
+        System.out.println(result2.getResponse().getContentAsString());
     }
 
     @Test
